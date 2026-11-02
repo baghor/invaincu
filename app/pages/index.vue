@@ -7,7 +7,7 @@
             <defs>
               <linearGradient id="logo-sky" x1="21" y1="2" x2="6" y2="18" gradientUnits="userSpaceOnUse">
                 <stop offset="0" stop-color="#38bdf8" />
-                <stop offset="1" stop-color="#0d9488" />
+                <stop offset="1" stop-color="#0e7490" />
               </linearGradient>
             </defs>
             <path class="logo__sky" d="M21.5 1.5 4.5 18.6h8.6l1.9-5.2h2.9z" fill="url(#logo-sky)" />
@@ -168,6 +168,17 @@
           <div class="work">
             <div v-for="(project, index) in projects" :key="project.name" v-reveal="index * 80" class="work__item">
               <article v-spotlight class="project spotlight">
+                <div class="project__media">
+                  <img
+                    :src="project.image"
+                    :alt="`${project.name} website`"
+                    class="project__image"
+                    width="1040"
+                    height="585"
+                    loading="lazy"
+                  />
+                </div>
+
                 <div class="project__top">
                   <span class="project__sector">{{ project.sector }}</span>
                   <span class="project__status">{{ project.status }}</span>
@@ -292,6 +303,9 @@
 <script setup lang="ts">
   import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
   import { useTheme } from '~/composables/useTheme'
+  import beautyhubImage from '~/assets/images/beautyhub.webp'
+  import imvahoImage from '~/assets/images/imvaho-nshya.webp'
+  import releveImage from '~/assets/images/la-nouvelle-releve.webp'
 
   const menuOpen = ref(false)
   const menuButton = ref<HTMLElement | null>(null)
@@ -423,6 +437,7 @@
   const projects = [
     {
       name: 'Imvaho Nshya',
+      image: imvahoImage,
       sector: 'National newspaper',
       status: 'Live',
       text: 'The revamped home of one of Rwanda’s best-known Kinyarwanda newspapers, built under a working contract with Rwanda Printing Company (RPC). Readers follow the news by topic, watch video and open the e-paper, alongside public notices and auction listings.',
@@ -431,6 +446,7 @@
     },
     {
       name: 'La Nouvelle Relève',
+      image: releveImage,
       sector: 'National newspaper',
       status: 'New version launching soon',
       text: 'A revamp of Rwanda’s French-language newspaper under the same contract with RPC, covering news from Rwanda and the world. Readers move through featured stories, trending topics, search and a full archive of past articles.',
@@ -439,6 +455,7 @@
     },
     {
       name: 'BeautyHub',
+      image: beautyhubImage,
       sector: 'Salon marketplace and management',
       status: 'Live on web and Android · iOS coming soon',
       text: 'Clients find a salon and book a real open time. Owners, from solo stylists to multi-branch chains, run bookings, staff, payments and more in one place.',
@@ -794,7 +811,7 @@
     inset: 0;
     background:
       radial-gradient(560px 420px at 88% 8%, rgba(56, 189, 248, 0.24), transparent 70%),
-      radial-gradient(460px 240px at 62% 70%, rgba(45, 212, 191, 0.16), transparent 70%);
+      radial-gradient(460px 240px at 62% 70%, rgba(14, 165, 233, 0.14), transparent 70%);
     pointer-events: none;
   }
 
@@ -930,6 +947,25 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: var(--paper);
+  }
+
+  /* The picture fills the top of the card, and leans in a little on hover */
+  .project__media {
+    margin: -28px -28px 24px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+    border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+  }
+
+  .project__image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.6s var(--ease-out);
+  }
+
+  .project:hover .project__image {
+    transform: scale(1.03);
   }
 
   .project__top {
@@ -1302,7 +1338,7 @@
       border-radius: 0;
       background:
         radial-gradient(420px 300px at 100% 100%, rgba(56, 189, 248, 0.14), transparent 70%),
-        radial-gradient(360px 260px at 0% 100%, rgba(45, 212, 191, 0.1), transparent 70%),
+        radial-gradient(360px 260px at 0% 100%, rgba(14, 165, 233, 0.08), transparent 70%),
         var(--glass-menu);
       -webkit-backdrop-filter: saturate(170%) blur(28px);
       backdrop-filter: saturate(170%) blur(28px);

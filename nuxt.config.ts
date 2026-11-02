@@ -1,4 +1,11 @@
 // Static site: `npm run generate` writes it to .output/public
+
+// The public address, without a trailing slash. WhatsApp, LinkedIn and others only
+// show the share picture from a full address, so set this when the site gets one.
+const siteUrl = ''
+const shareTitle = 'Invaincu Ltd · Fast, robust software from Kigali'
+const shareDescription = 'Fast, robust web platforms and mobile apps for organisations and growing businesses.'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
@@ -9,7 +16,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
-      title: 'Invaincu Ltd · Fast, robust software from Kigali',
+      title: shareTitle,
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
@@ -18,6 +25,15 @@ export default defineNuxtConfig({
             'Invaincu Ltd is a software company in Kigali, Rwanda, building fast, robust web platforms and mobile apps for organisations and growing businesses.',
         },
         { name: 'theme-color', content: '#ffffff' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'Invaincu Ltd' },
+        { property: 'og:title', content: shareTitle },
+        { property: 'og:description', content: shareDescription },
+        { property: 'og:image', content: `${siteUrl}/og-image.jpg` },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:alt', content: 'Invaincu: software that holds up when it matters' },
+        { name: 'twitter:card', content: 'summary_large_image' },
       ],
       /*
        * Runs before the first paint: picks the saved theme (else the system one)
