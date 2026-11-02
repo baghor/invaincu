@@ -17,7 +17,18 @@ export default defineNuxtConfig({
           content:
             'Invaincu Ltd is a software company in Kigali, Rwanda, building fast, robust web platforms and mobile apps for organisations and growing businesses.',
         },
-        { name: 'theme-color', content: '#14201d' },
+        { name: 'theme-color', content: '#ffffff' },
+      ],
+      /*
+       * Runs before the first paint: picks the saved theme (else the system one)
+       * so dark mode never flashes white. `js` lets the scroll animations hide
+       * content until it is revealed; if the app never starts, it is removed.
+       */
+      script: [
+        {
+          innerHTML:
+            "(function(){var d=document.documentElement,t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';d.dataset.theme=t;d.classList.add('js');setTimeout(function(){if(!window.__motion)d.classList.remove('js')},4000)})()",
+        },
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },

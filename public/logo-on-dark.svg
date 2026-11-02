@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <defs>
+    <linearGradient id="sky" x1="21" y1="2" x2="6" y2="18" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38bdf8" />
+      <stop offset="1" stop-color="#0d9488" />
+    </linearGradient>
+  </defs>
+  <path d="M21.5 1.5 4.5 18.6h8.6l1.9-5.2h2.9z" fill="url(#sky)" />
+  <path fill="#f6fbfe" d="M10.5 30.5 27.5 13.4h-8.6L17 18.6h-2.9z" />
+</svg>

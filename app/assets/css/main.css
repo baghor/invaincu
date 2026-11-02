@@ -1,15 +1,24 @@
 /* Colours and type in one place */
 :root {
-  --paper: #f7f5ef;
+  --paper: #f6fbfe;
   --surface: #ffffff;
-  --ink: #14201d;
-  --ink-soft: #52605c;
-  --line: #e2dfd5;
-  --accent: #b5622c;
-  --accent-soft: #f6e8db;
-  --on-ink: #f4f1ea;
-  --on-ink-soft: #a9b5b0;
-  --line-on-ink: #2c3a36;
+  --ink: #0f2433;
+  --ink-soft: #51687a;
+  --line: #dbe8ee;
+  --accent: #0277b5;
+  --accent-soft: #e0f4fd;
+  --gradient: linear-gradient(100deg, #0277b5, #0b7f75);
+  --headline-gradient: linear-gradient(95deg, #0ea5e9, #0d9488);
+  --contact-bg: linear-gradient(110deg, #e0f4fd, #dcf7f1);
+  --steps-bg: linear-gradient(180deg, #f6fbfe, #e9f7fb);
+  --icon-bg: linear-gradient(135deg, #e0f4fd, #dcf7f1);
+  --glass: rgba(255, 255, 255, 0.68);
+  --glass-menu: rgba(255, 255, 255, 0.82);
+  --glass-line: rgba(15, 36, 51, 0.1);
+  --status-ink: #075e85;
+  --lift-shadow: 0 22px 44px -26px rgba(15, 36, 51, 0.35);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 
   --font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-heading: 'Sora', 'Inter', system-ui, sans-serif;
@@ -17,6 +26,36 @@
   --radius: 16px;
   --page: 1120px;
   --gutter: 24px;
+  --header-height: 68px;
+}
+
+/* Dark theme: set on <html> by the head script and the theme button */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --paper: #0a1923;
+  --surface: #0f2230;
+  --ink: #e9f4f9;
+  --ink-soft: #9fb4c1;
+  --line: #1f3747;
+  --accent: #38bdf8;
+  --accent-soft: rgba(56, 189, 248, 0.14);
+  --headline-gradient: linear-gradient(95deg, #38bdf8, #2dd4bf);
+  --contact-bg: linear-gradient(110deg, #0e2a3b, #0c2c2c);
+  --steps-bg: linear-gradient(180deg, #0a1923, #0d2432);
+  --icon-bg: linear-gradient(135deg, rgba(56, 189, 248, 0.16), rgba(45, 212, 191, 0.14));
+  --glass: rgba(15, 34, 48, 0.7);
+  --glass-menu: rgba(10, 25, 35, 0.84);
+  --glass-line: rgba(233, 244, 249, 0.12);
+  --status-ink: #7dd3fc;
+  --lift-shadow: 0 22px 44px -26px rgba(0, 0, 0, 0.8);
+}
+
+/* Theme switch: the new theme spreads in a circle (see useTheme) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }
 
 *,
@@ -27,7 +66,7 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 88px;
+  scroll-padding-top: calc(var(--header-height) + 16px);
 }
 
 body {
@@ -65,6 +104,61 @@ a {
   padding: 0 var(--gutter);
 }
 
+/* v-reveal: a gentle fade and rise, once */
+.js [data-reveal] {
+  transition:
+    opacity 0.7s ease var(--reveal-delay, 0ms),
+    translate 0.8s var(--ease-out) var(--reveal-delay, 0ms);
+}
+
+.js [data-reveal]:not([data-in]) {
+  opacity: 0;
+  translate: 0 22px;
+}
+
+/* The line between process steps waits until its step appears */
+.js .step:not([data-in])::before {
+  transform: scaleX(0);
+}
+
+@media (max-width: 960px) {
+  .js .step:not([data-in])::before {
+    transform: scaleY(0);
+  }
+}
+
+/* Cards with v-spotlight: a glow follows the mouse and the card lifts a little */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+  transition:
+    transform 0.35s var(--ease-out),
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: radial-gradient(320px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent) 12%, transparent), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.spotlight:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+  box-shadow: var(--lift-shadow);
+}
+
+.spotlight:hover::before {
+  opacity: 1;
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -79,5 +173,6 @@ a {
   *::before,
   *::after {
     transition: none !important;
+    animation: none !important;
   }
 }
